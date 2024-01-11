@@ -1,0 +1,23 @@
+FROM google/cloud-sdk:latest
+
+RUN apt-get update 
+RUN apt-get install -y python3
+RUN mkdir /legacy_code_repo
+
+COPY requirements.txt /legacy_code_repo
+COPY display_stats.py /legacy_code_repo
+
+RUN pip install -r /legacy_code_repo/requirements.txt
+
+ENTRYPOINT [ "python3","/legacy_code_repo/display_stats.py" ]
+
+#create image syntax
+#docker build -t display_stats -f Dockerfile_2 .
+#docker run syntax
+#docker run -v /local_dir:/mount_dir display_stats --data_path=/mount_dir/data/train_go05W65.csv
+#link local docker image to revised image name as per GCP specifications
+#docker tag display_stats us-docker.pkg.dev/steady-cat-331605/gcr.io/display_stats:1.0
+#authorization command to be able to push to AR
+#gcloud auth configure-docker us-docker.pkg.dev
+#docker push to google cloud artifact registry
+#docker push us-docker.pkg.dev/steady-cat-331605/gcr.io/display_stats:1.0
