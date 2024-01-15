@@ -1,0 +1,23 @@
+FROM google/cloud-sdk:latest
+
+RUN apt-get update 
+RUN apt-get install -y python3
+RUN mkdir /legacy_code_repo
+
+COPY requirements.txt /legacy_code_repo
+COPY display_stats.py /legacy_code_repo
+
+RUN pip install -r /legacy_code_repo/requirements.txt
+
+ENTRYPOINT [ "python3","/legacy_code_repo/display_stats.py" ]
+
+
+#docker build -t display_stats -f Dockerfile_2 .
+
+#docker tag display_stats asia-south1-docker.pkg.dev/mlendtoend/artifact/load_data/display_stats
+#OR
+#docker tag display_stats gcr.io/mlendtoend/display_data
+
+#docker push asia-south1-docker.pkg.dev/mlendtoend/artifact/load_data/display_stats
+#OR
+#docker push gcr.io/mlendtoend/display_data
