@@ -1,0 +1,31 @@
+# PIPELINE DEFINITION
+# Name: basic-pipeline
+# Description: This pipeline does basic ETL and Stats gen
+components:
+  comp-store-stats:
+    executorLabel: exec-store-stats
+deploymentSpec:
+  executors:
+    exec-store-stats:
+      container:
+        args:
+        - --data_path=kubeflow_demo
+        command:
+        - python3
+        - /legacy_code_repo/store_stats.py
+        image: asia-south1-docker.pkg.dev/mlendtoend/artifact/store_stats
+pipelineInfo:
+  description: This pipeline does basic ETL and Stats gen
+  name: basic-pipeline
+root:
+  dag:
+    tasks:
+      store-stats:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-store-stats
+        taskInfo:
+          name: store-stats
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.6.0
