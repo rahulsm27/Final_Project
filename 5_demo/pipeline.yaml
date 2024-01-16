@@ -1,0 +1,29 @@
+# PIPELINE DEFINITION
+# Name: basic-pipeline
+# Description: This pipeline does basic ETL and Stats gen
+components:
+  comp-load-data:
+    executorLabel: exec-load-data
+deploymentSpec:
+  executors:
+    exec-load-data:
+      container:
+        command:
+        - python3
+        - data_processing.py
+        image: gcr.io/mlendtoend/process:latest
+pipelineInfo:
+  description: This pipeline does basic ETL and Stats gen
+  name: basic-pipeline
+root:
+  dag:
+    tasks:
+      load-data:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-load-data
+        taskInfo:
+          name: load-data
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.6.0
