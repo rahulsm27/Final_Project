@@ -9,19 +9,19 @@ def load_data():
     return dsl.ContainerSpec(
      
         image = 'gcr.io/mlendtoend/load_data',
-        args = ['--data_path=gs://kubeflow_demo'],
+        args = ['--data_path=kubeflow_demo'],
         command=["python3","/legacy_code_repo/load_data.py" ]
 
 
     )
 
 @dsl.container_component
-def display_data():
+def display_stats():
     return dsl.ContainerSpec(
        # name= "Data processing",
-        image = 'gcr.io/mlendtoend/display_data',
-        args = ['--data_path=gs://kubeflow_demo'],
-        command=["python3","/legacy_code_repo/display_data.py" ]
+        image = 'gcr.io/mlendtoend/display_stats',
+        args = ['--data_path=kubeflow_demo'],
+        command=["python3","/legacy_code_repo/display_stats.py" ]
 
 
 
@@ -35,7 +35,7 @@ def display_data():
 )
 def data_preprocessing():
     load_data()
-    display_data()
+    display_stats()
 
 
 

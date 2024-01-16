@@ -6,18 +6,24 @@ RUN mkdir /legacy_code_repo
 
 COPY requirements.txt /legacy_code_repo
 COPY display_stats.py /legacy_code_repo
+COPY k8s-gcr-auth-ro.json /legacy_code_repo/service-account-key.json
 
 RUN pip install -r /legacy_code_repo/requirements.txt
 
 ENTRYPOINT [ "python3","/legacy_code_repo/display_stats.py" ]
 
+# Set the environment variable for Google Cloud credentials
+ENV GOOGLE_APPLICATION_CREDENTIALS /legacy_code_repo/service-account-key.json
 
 #docker build -t display_stats -f Dockerfile_2 .
 
 #docker tag display_stats asia-south1-docker.pkg.dev/mlendtoend/artifact/load_data/display_stats
 #OR
-#docker tag display_stats gcr.io/mlendtoend/display_data
+#docker tag display_stats gcr.io/mlendtoend/display_stats
 
 #docker push asia-south1-docker.pkg.dev/mlendtoend/artifact/load_data/display_stats
 #OR
-#docker push gcr.io/mlendtoend/display_data
+#docker push gcr.io/mlendtoend/display_stats
+
+#docker run display_stats --data_path=kubeflow_demo
+#docker run gcr.io/mlendtoend/display_stats --data_path=kubeflow_demo

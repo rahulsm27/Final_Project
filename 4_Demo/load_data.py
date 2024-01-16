@@ -24,6 +24,7 @@ def gcp_csv_to_df(bucket_name, source_file_name):
     df = pd.read_csv(io.BytesIO(data))
     print(f'Pulled down file from bucket {bucket_name}, file name: {source_file_name}')
     return df
+#kubeflow_demo
 
 def transform_data(data):
     '''
