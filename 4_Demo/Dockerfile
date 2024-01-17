@@ -19,7 +19,7 @@ ENV GOOGLE_APPLICATION_CREDENTIALS /legacy_code_repo/service-account-key.json
 
 #docker build -t load_data -f Dockerfile .
 
-#docker tag load_data aia-south1-docker.pkg.dev/mlendtoend/artifact/load_data
+#docker tag load_data asia-south1-docker.pkg.dev/mlendtoend/artifact/load_data
 #OR
 #docker tag load_data gcr.io/mlendtoend/load_data
 

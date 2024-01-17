@@ -1,0 +1,48 @@
+# PIPELINE DEFINITION
+# Name: basic-pipeline
+# Description: This pipeline does basic ETL and Stats gen
+components:
+  comp-display-stats:
+    executorLabel: exec-display-stats
+  comp-load-data:
+    executorLabel: exec-load-data
+deploymentSpec:
+  executors:
+    exec-display-stats:
+      container:
+        args:
+        - --data_path=kubeflow_demo
+        command:
+        - python3
+        - /legacy_code_repo/display_stats.py
+        image: asia-south1-docker.pkg.dev/mlendtoend/artifact/display_stats
+    exec-load-data:
+      container:
+        args:
+        - --data_path=kubeflow_demo
+        command:
+        - python3
+        - /legacy_code_repo/load_data.py
+        image: asia-south1-docker.pkg.dev/mlendtoend/artifact/load_data
+pipelineInfo:
+  description: This pipeline does basic ETL and Stats gen
+  name: basic-pipeline
+root:
+  dag:
+    tasks:
+      display-stats:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-display-stats
+        taskInfo:
+          name: display-stats
+      load-data:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-load-data
+        taskInfo:
+          name: load-data
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.6.0

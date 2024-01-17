@@ -17,13 +17,14 @@ ENV GOOGLE_APPLICATION_CREDENTIALS /legacy_code_repo/service-account-key.json
 
 #docker build -t display_stats -f Dockerfile_2 .
 
-#docker tag display_stats asia-south1-docker.pkg.dev/mlendtoend/artifact/load_data/display_stats
+#docker tag display_stats asia-south1-docker.pkg.dev/mlendtoend/artifact/display_stats
 #OR
 #docker tag display_stats gcr.io/mlendtoend/display_stats
 
-#docker push asia-south1-docker.pkg.dev/mlendtoend/artifact/load_data/display_stats
+#docker push asia-south1-docker.pkg.dev/mlendtoend/artifact/display_stats
 #OR
 #docker push gcr.io/mlendtoend/display_stats
 
 #docker run display_stats --data_path=kubeflow_demo
 #docker run gcr.io/mlendtoend/display_stats --data_path=kubeflow_demo
+#dockert asia-south1-docker.pkg.dev/mlendtoend/artifact/display_stats
