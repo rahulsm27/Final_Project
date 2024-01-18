@@ -1,0 +1,29 @@
+# configure-dask-dashboard.yaml
+apiVersion: "kubeflow.org/v1alpha1"
+kind: PodDefault
+metadata:
+  name: configure-dask-dashboard
+  spec:
+  selector:
+    matchLabels:
+      configure-dask-dashboard: "true"
+desc: "configure dask dashboard"
+env:
+  - name: DASK_DISTRIBUTED__DASHBOARD__LINK
+  value: "{NB_PREFIX}/proxy/{host}:{port}/status"
+volumeMounts:
+  - name: jupyter-server-proxy-config
+  mountPath: /root/.jupyter/jupyter_server_config.py
+  subPath: jupyter_server_config.py
+volumes:
+  - name: jupyter-server-proxy-config
+  configMap:
+    name: jupyter-server-proxy-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+name: jupyter-server-proxy-config
+data:
+jupyter_server_config.py: |
+  c.ServerProxy.host_allowlist = lambda app, host: True
