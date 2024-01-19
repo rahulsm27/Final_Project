@@ -1,0 +1,29 @@
+# PIPELINE DEFINITION
+# Name: basic-pipeline
+# Description: This pipeline does basic ETL
+components:
+  comp-dask-demo:
+    executorLabel: exec-dask-demo
+deploymentSpec:
+  executors:
+    exec-dask-demo:
+      container:
+        command:
+        - python3
+        - /legacy_code_repo/dask_demo.py
+        image: asia-south1-docker.pkg.dev/mlendtoend/artifact/dask_demo
+pipelineInfo:
+  description: This pipeline does basic ETL
+  name: basic-pipeline
+root:
+  dag:
+    tasks:
+      dask-demo:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-dask-demo
+        taskInfo:
+          name: dask-demo
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.6.0
