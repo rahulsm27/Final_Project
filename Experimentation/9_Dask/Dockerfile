@@ -1,14 +1,15 @@
-FROM ghcr.io/dask/dask-kubernetes-operator:2024.1.0
+FROM python:latest
+
 RUN apt-get update 
 RUN apt-get install -y python3
 RUN mkdir /legacy_code_repo
 
 
 COPY requirements.txt /legacy_code_repo
-COPY dask_demo.py /legacy_code_repo
 RUN pip install -r /legacy_code_repo/requirements.txt
 # Copy the service account key into the Docker image
 COPY secret.json /legacy_code_repo/service-account-key.json
+COPY dask_demo.py /legacy_code_repo
 
 
 
